@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About the Model - Crop Yield Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-image: url('/static/bg2.JPG'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+    }
+  </style>
+</head>
+<body class="bg-green-50 text-gray-800 font-sans antialiased">
+  <div class="max-w-full sm:max-w-5xl lg:max-w-6xl mx-auto my-10 p-8 bg-white shadow-lg rounded-lg">
+
+    <a href="{{ url_for('index') }}" class="text-green-600 underline hover:underline mb-6 inline-block">← Back to Predictor</a>
+
+
+    <h1 class="text-3xl sm:text-4xl lg:text-3xl font-extrabold text-green-800 mb-6 text-center bg-gradient-to-r from-yellow-200 to-green-300 bg-opacity-50 p-4 relative overflow-hidden">
+      <span class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30" style="background-image: url('https://example.com/grain-texture.jpg');"></span>
+      About the Model
+    </h1>
+    <p class="mb-6 text-lg sm:text-xl leading-relaxed text-gray-800 text-justify">
+      This crop yield prediction model is built using machine learning techniques trained on agricultural data.
+      It uses features like Nitrogen (N), Phosphorus (P), Potassium (K), temperature, humidity, pH, and rainfall to predict the most suitable crop and its expected yield.
+    </p>
+    
+    <h1 class="text-3xl sm:text-4xl lg:text-3xl font-extrabold text-green-800 mb-6 text-center bg-gradient-to-r from-yellow-200 to-green-300 bg-opacity-50 p-4 relative overflow-hidden">
+      <span class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30" style="background-image: url('https://example.com/grain-texture.jpg');"></span>
+      Exploratory Data Analysis (EDA)
+    </h1>
+    <p class="mb-6 text-lg sm:text-xl leading-relaxed text-gray-800 text-justify">Here are some key insights visualized during the data exploration phase:</p>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='heatmap.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='heatmap.png') }}" alt="Missing Values Heatmap" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 1: Missing Values Heatmap</p>
+      </div>
+      
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='temperature_ph_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='temperature_ph_plot.png') }}" alt="Distribution of Temperature and pH Levels" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 2: Distribution of Temperature and pH Levels</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='label_class_distribution.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='label_class_distribution.png') }}" alt="Class Distribution of Labels" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 3: Class Distribution of Labels</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='pair_plot_features_label.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='pair_plot_features_label.png') }}" alt="Pair Plot of Features by Label" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 4: Pair Plot of Features by Label</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='rainfall_humidity_joint_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='rainfall_humidity_joint_plot.png') }}" alt="Joint Distribution of Rainfall and Humidity (Temp < 30°C & Rainfall > 120mm)" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 5: Joint Distribution of Rainfall and Humidity (Temp < 30°C & Rainfall > 120mm)</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='potassium_nitrogen_joint_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='potassium_nitrogen_joint_plot.png') }}" alt="Joint Distribution of Potassium (K) and Nitrogen (N) for High Nutrient Levels (K > 40 & N > 40)" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 6: Joint Distribution of Potassium (K) and Nitrogen (N) for High Nutrient Levels (K > 40 & N > 40)</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='potassium_humidity_joint_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='potassium_humidity_joint_plot.png') }}" alt="Joint Distribution of Potassium (K) and Humidity by Label" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 7: Joint Distribution of Potassium (K) and Humidity by Label</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='ph_label_distribution.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='ph_label_distribution.png') }}" alt="Distribution of pH Levels Across Labels" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 8: Distribution of pH Levels Across Labels</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='phosphorus_label_rainfall_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='phosphorus_label_rainfall_plot.png') }}" alt="Phosphorus (P) Distribution by Label for Rainfall > 150mm" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 9: Phosphorus (P) Distribution by Label for Rainfall > 150mm</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='rainfall_potassium_low_humidity_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='rainfall_potassium_low_humidity_plot.png') }}" alt="Rainfall vs Potassium (K) for Low Humidity Conditions (Humidity < 65%)" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 10: Rainfall vs Potassium (K) for Low Humidity Conditions (Humidity < 65%)</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='temperature_rainfall_region_plot.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='temperature_rainfall_region_plot.png') }}" alt="Joint Distribution of Temperature and Rainfall by Region" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 11: Joint Distribution of Temperature and Rainfall by Region</p>
+      </div>
+    
+      <div class="flex flex-col items-center">
+        <a href="{{ url_for('static', filename='cor_heatmap.png') }}" target="_blank">
+          <img src="{{ url_for('static', filename='cor_heatmap.png') }}" alt="Correlation Heatmap of Features" class="rounded-lg shadow-md hover:scale-105 transition duration-300 ease-in-out" />
+        </a>
+        <p class="mt-4 text-sm font-bold text-black text-center">Figure 12: Correlation Heatmap of Features</p>
+      </div>
+    </div>
+    
+    <section class="p-6 bg-gradient-to-r from-green-200 to-yellow-100 rounded-lg shadow-lg mt-8">
+      <div class="bg-green-600 text-black px-4 py-2 rounded-md mb-4 inline-flex items-center">
+        <span class="mr-2">🌾</span>
+        <h2 class="text-2xl font-semibold">Crop Yield Prediction Model</h2>
+      </div>
+    
+      <p class="text-lg text-gray-700 mb-4 text-justify">The crop yield prediction model uses a Random Forest Classifier, trained on agricultural data such as soil conditions, temperature, and rainfall.</p>
+      
+      <p class="text-lg text-gray-700 mb-4 text-justify">Data preprocessing includes:</p>
+      <ul class="list-disc pl-6 text-gray-700 mb-4">
+        <li><strong>🌱 Splitting data:</strong> Training and testing sets are created using <code class="bg-green-100 p-1 rounded">train_test_split</code>.</li>
+        <li><strong>🌾 One-Hot Encoding:</strong> Categorical 'region' is converted to numerical values.</li>
+        <li><strong>🌿 Feature Scaling:</strong> Min-Max scaling adjusts feature ranges.</li>
+      </ul>
+      
+      <p class="text-lg text-gray-700 mb-4 text-justify">After training, the model's predictions are evaluated using:</p>
+      <ul class="list-disc pl-6 text-gray-700 mb-4">
+        <li><strong>📊 Mean Squared Error (MSE):</strong> Measures prediction error.</li>
+        <li><strong>📈 Root Mean Squared Error (RMSE):</strong> Provides interpretable error metrics.</li>
+        <li><strong>🧑‍🌾 R² Score:</strong> Indicates model fit.</li>
+      </ul>
+      
+      <p class="text-lg text-gray-700 mb-4 text-justify">The model’s classification performance is analyzed using a confusion matrix.</p>
+      
+      <div class="bg-green-600 text-gray-800 px-4 py-2 rounded-md mb-4 inline-flex items-center">
+        <span class="mr-2">🌾</span>
+        <h3 class="text-xl font-semibold">Confusion Matrix for Crop Prediction</h3>
+      </div>
+    
+      <p class="text-lg text-gray-700 mb-4 text-justify">The confusion matrix below represents the classification performance of the crop prediction model.</p>
+      
+      <a href="{{ url_for('static', filename='confusion_matrix_crop.png') }}" target="_blank">
+        <img src="{{ url_for('static', filename='confusion_matrix_crop.png') }}" alt="Confusion Matrix for Crop Prediction" class="w-4/5 max-w-lg mx-auto rounded-lg shadow-lg mb-4 hover:scale-105 transition duration-300 ease-in-out">
+      </a>
+    
+      <div class="bg-green-600 text-gray-800 px-4 py-2 rounded-md mb-4 inline-flex items-center">
+        <span class="mr-2">🌾</span>
+        <h3 class="text-xl font-semibold">Confusion Matrix for Yield Prediction</h3>
+      </div>
+    
+      <p class="text-lg text-gray-700 mb-4 text-justify">The confusion matrix below represents the classification performance of the yield prediction model (binned).</p>
+      
+      <a href="{{ url_for('static', filename='confusion_matrix_yield.png') }}" target="_blank">
+        <img src="{{ url_for('static', filename='confusion_matrix_yield.png') }}" alt="Confusion Matrix for Yield Prediction" class="w-4/5 max-w-lg mx-auto rounded-lg shadow-lg mb-4 hover:scale-105 transition duration-300 ease-in-out">
+      </a>
+    </section>
+    
+    
+    
+  </div>
+  
+</body>
+</html>

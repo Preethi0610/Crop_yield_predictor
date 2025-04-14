@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crop Yield Prediction</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" />
+  <style>
+    body {
+      background-image: url('/static/bg2.JPG'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased px-4 sm:px-6 lg:px-8 py-8">
+
+  <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg space-y-8 opacity-90">
+    <!-- Header Section -->
+    <div>
+      <div class="flex items-center space-x-3">
+        <img src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png" alt="Plant Icon" class="w-10 h-10" />
+        <h1 class="text-3xl font-bold text-green-600">Crop Yield Predictor</h1>
+      </div>
+      <p class="text-sm text-gray-600 mt-1 ml-12">Smart predictions using soil & climate data</p>
+      <div class="mt-2 ml-12">
+        <a href="{{ url_for('learn') }}" class="text-green-800 font-bold underline hover:underline mb-6 inline-block">Learn more about the work!</a>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <form id="predictionForm" method="POST" class="space-y-6">
+      <div>
+        <label for="N" class="block text-lg font-medium text-green-700">Nitrogen (N):</label>
+        <input type="text" name="N" id="N" required placeholder="Enter Nitrogen value (kg/ha)"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="N-error" class="text-red-500 text-sm hidden">Nitrogen value must be between 1 and 500.</p>
+      </div>
+
+      <div>
+        <label for="P" class="block text-lg font-medium text-green-700">Phosphorus (P):</label>
+        <input type="text" name="P" id="P" required placeholder="Enter Phosphorus value (kg/ha)"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="P-error" class="text-red-500 text-sm hidden">Phosphorus value must be between 1 and 300.</p>
+      </div>
+
+      <div>
+        <label for="K" class="block text-lg font-medium text-green-700">Potassium (K):</label>
+        <input type="text" name="K" id="K" required placeholder="Enter Potassium value (kg/ha)"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="K-error" class="text-red-500 text-sm hidden">Potassium value must be between 1 and 300.</p>
+      </div>
+
+      <div>
+        <label for="temperature" class="block text-lg font-medium text-green-700">Temperature (°C):</label>
+        <input type="text" name="temperature" id="temperature" required placeholder="Enter Temperature (°C)"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="temperature-error" class="text-red-500 text-sm hidden">Temperature must be between 15 and 45°C.</p>
+      </div>
+
+      <div>
+        <label for="humidity" class="block text-lg font-medium text-green-700">Humidity (%):</label>
+        <input type="text" name="humidity" id="humidity" required placeholder="Enter Humidity (%)"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="humidity-error" class="text-red-500 text-sm hidden">Humidity value must be between 0 and 100%.</p>
+      </div>
+
+      <div>
+        <label for="ph" class="block text-lg font-medium text-green-700">Soil pH:</label>
+        <input type="text" name="ph" id="ph" required placeholder="Enter Soil pH value"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="ph-error" class="text-red-500 text-sm hidden">Soil pH value must be between 5.0 and 9.0.</p>
+      </div>
+
+      <div>
+        <label for="rainfall" class="block text-lg font-medium text-green-700">Rainfall (mm):</label>
+        <input type="text" name="rainfall" id="rainfall" required placeholder="Enter Rainfall (mm)"
+          class="mt-2 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+        <p id="rainfall-error" class="text-red-500 text-sm hidden">Rainfall value must be between 0 and 5000 mm.</p>
+      </div>
+
+      <div class="text-center">
+        <button type="submit"
+          class="mt-4 px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500">
+          Predict
+        </button>
+      </div>
+    </form>
+
+    <!-- Prediction Result -->
+    <div id="predictionResult" class="mt-8 text-center hidden">
+      <h2 class="text-2xl font-semibold text-green-800" id="predictedCrop">Predicted Crop: </h2>
+      <h2 class="text-xl font-medium text-green-700" id="predictedYield">Predicted Crop Yield: </h2>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('predictionForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const N = document.getElementById('N').value;
+      const P = document.getElementById('P').value;
+      const K = document.getElementById('K').value;
+      const temperature = document.getElementById('temperature').value;
+      const humidity = document.getElementById('humidity').value;
+      const ph = document.getElementById('ph').value;
+      const rainfall = document.getElementById('rainfall').value;
+
+      let isValid = true;
+
+      // Reset error messages
+      document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+
+      // Validate Nitrogen
+      if (N < 1 || N > 500) {
+        document.getElementById('N-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      // Validate Phosphorus
+      if (P < 1 || P > 300) {
+        document.getElementById('P-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      // Validate Potassium
+      if (K < 1 || K > 300) {
+        document.getElementById('K-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      // Validate Temperature
+      if (temperature < 15 || temperature > 45) {
+        document.getElementById('temperature-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      // Validate Humidity
+      if (humidity < 0 || humidity > 100) {
+        document.getElementById('humidity-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      // Validate pH
+      if (ph < 5.0 || ph > 9.0) {
+        document.getElementById('ph-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      // Validate Rainfall
+      if (rainfall < 0 || rainfall > 5000) {
+        document.getElementById('rainfall-error').classList.remove('hidden');
+        isValid = false;
+      }
+
+      if (!isValid) return;
+
+      fetch('/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          N, P, K, temperature, humidity, ph, rainfall
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('predictedCrop').innerText = `Predicted Crop: ${data.predicted_crop}`;
+          document.getElementById('predictedYield').innerText = `Predicted Crop Yield: ${data.predicted_yield.toFixed(2)} tons`;
+          document.getElementById('predictionResult').classList.remove('hidden');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    });
+  </script>
+
+</body>
+</html>
