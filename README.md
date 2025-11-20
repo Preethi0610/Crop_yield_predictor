@@ -4,7 +4,7 @@ A machine learning-based application designed to forecast crop yields using envi
 
 ---
 
-## 🚀 Features
+## Features
 
 - Predicts crop yields based on weather patterns, soil types, and other input features.
 - Utilizes **Random Forest** algorithm for high accuracy and robustness.
@@ -15,7 +15,7 @@ A machine learning-based application designed to forecast crop yields using envi
 
 ---
 
-## 🧠 Machine Learning Stack
+## Machine Learning Stack
 
 - **Language:** Python
 - **Libraries:** 
